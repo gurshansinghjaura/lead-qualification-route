@@ -6,8 +6,8 @@ An AI system that scores and routes inbound leads the moment they submit a form 
 ## Architecture
 A form submission (name, email, company, automation need, budget range, timeline) triggers an AI agent (Claude Sonnet 4.6) that scores the lead 0-100 based on stated budget, urgency language, how specific the automation need is, and whether the business fits the target niche. The agent returns a score, a category (Hot/Warm/Cold), and a one-line reason. That output is parsed out of the model's response and used to branch the workflow: every lead is logged to Google Sheets regardless of category, Hot leads trigger an immediate Slack alert to the sales channel with the lead's details and the reason they scored high, and Warm/Cold leads receive an automated thank-you email confirming their submission was received.
 
-![n8n canvas screenshot]( <img width="2259" height="1396" alt="image" src="https://github.com/user-attachments/assets/8550ebba-9936-4269-b906-01c0d0605798" />
-)
+![n8n canvas screenshot] <img width="2259" height="1396" alt="image" src="https://github.com/user-attachments/assets/8550ebba-9936-4269-b906-01c0d0605798" />
+
 
 ## Key technical decisions
 - Gave the AI agent an explicit, weighted scoring rubric (budget stated and realistic, urgency language, specificity of the need, business-type fit, with "just exploring + vague budget" as a negative signal) rather than an open-ended "rate this lead" prompt, so scores are consistent across submissions.

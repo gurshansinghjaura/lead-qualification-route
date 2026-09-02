@@ -6,17 +6,17 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "16Zq82ZeXQHBip6O8QdqOfj7zSKoBojYR2FNhjKkqW4A",
+          "value": "YOUR_SPREADSHEET_ID",
           "mode": "list",
           "cachedResultName": "Growthspike Leads",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16Zq82ZeXQHBip6O8QdqOfj7zSKoBojYR2FNhjKkqW4A/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16Zq82ZeXQHBip6O8QdqOfj7zSKoBojYR2FNhjKkqW4A/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -264,7 +264,7 @@
         "select": "channel",
         "channelId": {
           "__rl": true,
-          "value": "C0BMG8L9GN8",
+          "value": "YOUR_SLACK_CHANNEL_ID",
           "mode": "list",
           "cachedResultName": "leads"
         },
@@ -410,9 +410,9 @@
     "LeadForm": [
       {
         "json": {
-          "Name": "GrowthSpike",
-          "Email": "growthspikeai@gmail.com",
-          "Company/Business Name": "gs spike",
+          "Name": "Test Lead",
+          "Email": "test@example.com",
+          "Company/Business Name": "Test Company",
           "What do you need automated?": "cumy crm system",
           "Budget Range": "1L+",
           "Timeline": "ASAP",

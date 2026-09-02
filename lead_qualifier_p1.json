@@ -1,0 +1,520 @@
+{
+  "name": "Lead Qualifier P1",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "16Zq82ZeXQHBip6O8QdqOfj7zSKoBojYR2FNhjKkqW4A",
+          "mode": "list",
+          "cachedResultName": "Growthspike Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16Zq82ZeXQHBip6O8QdqOfj7zSKoBojYR2FNhjKkqW4A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16Zq82ZeXQHBip6O8QdqOfj7zSKoBojYR2FNhjKkqW4A/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('LeadForm').item.json.Name }}",
+            "Email": "={{ $('LeadForm').item.json.Email }}",
+            "Company": "={{ $('LeadForm').item.json['Company/Business Name'] }}",
+            "Need": "={{ $('LeadForm').item.json['What do you need automated?'] }}",
+            "Budget ": "={{ $('LeadForm').item.json['Budget Range'] }}",
+            "Timeline ": "={{ $('LeadForm').item.json.Timeline }}",
+            "Data": "={{ $now }}",
+            "Score ": "={{$json.score}}",
+            "Category": "={{$json.category}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Need",
+              "displayName": "Need",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Budget ",
+              "displayName": "Budget ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timeline ",
+              "displayName": "Timeline ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Score ",
+              "displayName": "Score ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -448,
+        192
+      ],
+      "id": "b3467497-dbce-4bbf-b8f5-ba1ba21f1ff3",
+      "name": "Append row in sheet"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Company: {{$json['Company/Business Name']}}\nNeed: {{$json['What do you need automated?']}}\nBudget: {{$json['Budget Range']}}\nTimeline: {{$json['Timeline']}}",
+        "options": {
+          "systemMessage": "You are a helpfuYou are a lead qualification assistant for GrowthSpike AI, a no-code AI\n   automation agency serving small businesses (agencies, clinics, local\n   service businesses).\n\n   Score the lead from 0-100 based on:\n   - Budget stated and realistic for automation services (₹25k+): HIGH weight\n   - Urgency language present (\"need this now\", \"losing customers\", \"ASAP\"): HIGH weight\n   - Specific, clear automation need (not vague like \"help with AI\"): MEDIUM weight\n   - Business type fits our niche (small/local business, not huge enterprise): MEDIUM weight\n   - \"Just exploring\" + vague budget together: NEGATIVE signal\n\n   Respond ONLY in this exact JSON format, nothing else:\n   {\n     \"score\": <number 0-100>,\n     \"category\": \"<Hot, Warm, or Cold>\",\n     \"reason\": \"<one short sentence why>\"\n   }\n\n   Category rules: score 70+ = Hot, 40-69 = Warm, below 40 = Cold.l assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -1024,
+        192
+      ],
+      "id": "c6b62aca-0218-47ec-95e8-4b18447ddc4f",
+      "name": "AI Agent",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-6",
+          "cachedResultName": "Claude Sonnet 4.6"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [
+        -944,
+        432
+      ],
+      "id": "323c152e-44a2-4291-8d52-29b4d152faf2",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "YOUR_CREDENTIAL_ID",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Category }}",
+                    "rightValue": "=Hot",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "b7d2ac63-76fa-408a-a6f5-9b3d95cd4c00"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "fb65ae61-322a-406e-9702-4c0d22b9581f",
+                    "leftValue": "={{ $json.Category }}",
+                    "rightValue": "Warm",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "f3764719-7082-44a5-8a0b-96ec79132223",
+                    "leftValue": "={{ $json.Category }}",
+                    "rightValue": "Cold",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -224,
+        176
+      ],
+      "id": "02968e0b-d83e-4c3f-bab8-62fbeef24032",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BMG8L9GN8",
+          "mode": "list",
+          "cachedResultName": "leads"
+        },
+        "text": "=🔥 HOT LEAD: {{ $('LeadForm').item.json['Name'] }} from {{ $('LeadForm').item.json['Company/Business Name'] }}\nNeed: {{ $('LeadForm').item.json['What do you need automated?'] }}\nBudget: {{ $('LeadForm').item.json['Budget Range'] }} | Timeline: {{ $('LeadForm').item.json['Timeline'] }}\nWhy: {{ $('Code in JavaScript').item.json.reason }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8561538f-24bf-4e62-bafb-0def371d749e",
+      "name": "Hot",
+      "webhookId": "c53ebd94-bdee-48bd-a375-f1729f4aba89"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json['Email']}}",
+        "subject": "\"Thanks for reaching out to GrowthSpike AI\"",
+        "message": "=<p>Hi {{$json['Name']}},</p> <p>Thanks for reaching out to GrowthSpike AI about automating your {{$json['Company/Business Name']}} workflows.</p> <p>We've received your details and will get back to you within a few business days with next steps.</p> <p>Best regards,<br>GrowthSpike AI</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        192
+      ],
+      "id": "38809694-97b0-4eaa-b28e-58c3eebe3542",
+      "name": "Warm",
+      "webhookId": "78fd4b60-5515-4ff1-bdbb-0dc8e691ddf1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json['Email']}}",
+        "subject": "\"Thanks for reaching out to GrowthSpike AI\"",
+        "message": "=<p>Hi {{$json['Name']}},</p> <p>Thanks for reaching out to GrowthSpike AI about automating your {{$json['Company/Business Name']}} workflows.</p> <p>We've received your details and will get back to you within a few business days with next steps.</p> <p>Best regards,<br>GrowthSpike AI</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        384
+      ],
+      "id": "dff05a93-0d32-4a2e-a4d4-27b37b9638b1",
+      "name": "Cold",
+      "webhookId": "2b164f08-ef62-4e52-b859-ea19d3b75ebe"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the raw text from the AI Agent\nlet raw = $input.item.json.output;\n\n// Strip markdown code fences if present\nraw = raw.replace(/```json/g, '').replace(/```/g, '').trim();\n\n// Parse it into a real object\nconst parsed = JSON.parse(raw);\n\nreturn {\n  json: {\n    ...$input.item.json,\n    score: parsed.score,\n    category: parsed.category,\n    reason: parsed.reason\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -672,
+        192
+      ],
+      "id": "d4bcfdc6-2155-49c0-a121-c16333c0c3eb",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "formTitle": "\"Get a Free Automation Quote\"",
+        "formDescription": "\"Tell us what you want automated and we'll get back to you.\"",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Company/Business Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "What do you need automated?",
+              "fieldType": "textarea",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Budget Range",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Under 25k"
+                  },
+                  {
+                    "option": "25k to 1L"
+                  },
+                  {
+                    "option": "1L+"
+                  },
+                  {
+                    "option": "Not Sure Yet"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Timeline",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "ASAP"
+                  },
+                  {
+                    "option": "Within a Month"
+                  },
+                  {
+                    "option": "Just Exploring "
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -1248,
+        192
+      ],
+      "id": "112aedbf-d568-4da7-8b1d-34d759d8d3a7",
+      "name": "LeadForm",
+      "webhookId": "878dbc93-1e60-4169-8751-0609e05570fa"
+    }
+  ],
+  "pinData": {
+    "LeadForm": [
+      {
+        "json": {
+          "Name": "GrowthSpike",
+          "Email": "growthspikeai@gmail.com",
+          "Company/Business Name": "gs spike",
+          "What do you need automated?": "cumy crm system",
+          "Budget Range": "1L+",
+          "Timeline": "ASAP",
+          "submittedAt": "2026-08-01T20:54:50.808+05:30",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Hot",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Warm",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cold",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LeadForm": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1049c12f-f116-40b9-9f58-6ae51526ffd4",
+  "meta": {
+    "instanceId": "f53fdea333ef619cc55412fb525070a8cde3e97bda99780420ea2747cb06b6e1"
+  },
+  "nodeGroups": [],
+  "id": "LapU3MAx1TuwDOO1",
+  "tags": []
+}
